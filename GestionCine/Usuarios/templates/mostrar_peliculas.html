@@ -1,0 +1,14 @@
+{% for categoria in categorias %}
+    <h2>{{ categoria }}</h2>
+    <ul>
+        {% for pelicula in peliculas_por_categoria[categoria] %}
+            <li>{{ pelicula.titulo }}</li>
+            <li>{{ pelicula.director }}</li>
+            <li>{{ pelicula.anio }}</li>
+            <li>{{ pelicula.fecha }}</li>
+            <li>{{ pelicula.hora }}</li>
+            <li>{{ pelicula.imagen }}</li>
+            <li>{{ pelicula.precio }}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
