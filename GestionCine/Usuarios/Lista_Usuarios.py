@@ -96,7 +96,12 @@ class ListaEnlazadaSimple:
                continue  # Saltar el usuario repetido
 
             if operacion == 1:
-                self.add(objeto)
+                if self.existe_usuario_correo(correo):
+                    print("\tEl cliente ya existe en la lista.")
+                    return False
+
+                else:
+                    self.add(objeto)
             elif operacion == 2:
                 self.modify(objeto, indice)
             elif operacion == 3:
@@ -109,7 +114,7 @@ class ListaEnlazadaSimple:
         nuevo_cliente = ET.Element("usuario")
 
         rol = ET.SubElement(nuevo_cliente, 'rol')
-        rol.text = 'Cliente'
+        rol.text = 'cliente'
 
         nombre = ET.SubElement(nuevo_cliente, 'nombre')
         nombre.text = Nombre
@@ -167,6 +172,14 @@ class ListaEnlazadaSimple:
                 break
 
         tree.write('usuarios.xml')
+        
+    def buscar(self, correo, contrasena):
+        current = self.cabeza
+        while current:
+            if current.data.correo == correo and current.data.contrasena == contrasena:
+                return current.data
+            current = current.next
+        return None
     
 
 class Usuario:

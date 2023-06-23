@@ -20,7 +20,7 @@ from Usuarios.views import login
 from Usuarios.views import pagina_administrador
 from Usuarios.views import pagina_cliente
 from Usuarios.views import mostrar_peliculas
-from Usuarios.views import gestionar_usuarios, crear_usuario, mostrar_usuarios, cargar_xml
+from Usuarios.views import gestionar_usuarios, crear_usuario, mostrar_usuarios, cargar_xml, modificar_usuario, eliminar_usuario
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,4 +32,6 @@ urlpatterns = [
     path('crear_usuario/', crear_usuario, name='crear_usuario'),
     path('mostrar_usuarios/', mostrar_usuarios, name='mostrar_usuarios'),
     path('cargar_xml/',cargar_xml, name='cargar_xml'), 
+    path('modificar_usuario/', modificar_usuario, name='modificar_usuario'),
+    path('eliminar_usuario/', eliminar_usuario, name='eliminar_usuario'),
 ]
