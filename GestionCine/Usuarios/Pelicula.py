@@ -7,69 +7,96 @@ class Pelicula:
         self.hora = hora
         self.imagen = imagen
         self.precio = precio
-
-class Nodo:
-    def __init__(self, pelicula):
-        self.pelicula = pelicula
         self.siguiente = None
         self.anterior = None
 
-class ListaDoblementeEnlazadaCircular:
+
+class Categoria:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.peliculas = None
+        self.siguiente = None
+        self.anterior = None
+
+
+class ListaCircularDoblementeEnlazada:
     def __init__(self):
-        self.primero = None
-        self.ultimo = None
+        self.cabeza = None
         
+    def __iter__(self):
+        return self.loop()
 
-    def esta_vacia(self):
-        return self.primero is None
+    def loop(self):
+        if self.cabeza is not None:
+            actual = self.cabeza
+            while True:
+                yield actual.data
+                actual = actual.siguiente
+                if actual == self.cabeza:
+                    break
 
-    def agregar_pelicula(self, pelicula):
-        nuevo_nodo = Nodo(pelicula)
 
-        if self.esta_vacia():
-            nuevo_nodo.siguiente = nuevo_nodo
-            nuevo_nodo.anterior = nuevo_nodo
-            self.primero = nuevo_nodo
-            self.ultimo = nuevo_nodo
+    def agregar_categoria(self, nombre):
+        nueva_categoria = Categoria(nombre)
+        if self.cabeza is None:
+            self.cabeza = nueva_categoria
+            nueva_categoria.siguiente = nueva_categoria
+            nueva_categoria.anterior = nueva_categoria
         else:
-            nuevo_nodo.siguiente = self.primero
-            nuevo_nodo.anterior = self.ultimo
-            self.primero.anterior = nuevo_nodo
-            self.ultimo.siguiente = nuevo_nodo
-            self.ultimo = nuevo_nodo
+            ultima_categoria = self.cabeza.anterior
+            ultima_categoria.siguiente = nueva_categoria
+            nueva_categoria.anterior = ultima_categoria
+            nueva_categoria.siguiente = self.cabeza
+            self.cabeza.anterior = nueva_categoria
+
+    def agregar_pelicula(self, categoria, titulo, director, anio, fecha, hora, imagen, precio):
+        nueva_pelicula = Pelicula(titulo, director, anio, fecha, hora, imagen, precio)
+
+        categoria_actual = self.cabeza
+        while categoria_actual.nombre != categoria:
+            categoria_actual = categoria_actual.siguiente
+            if categoria_actual == self.cabeza:
+                print("La categoría especificada no existe.")
+                return
+
+        if categoria_actual.peliculas is None:
+            categoria_actual.peliculas = nueva_pelicula
+            nueva_pelicula.siguiente = nueva_pelicula
+            nueva_pelicula.anterior = nueva_pelicula
+        else:
+            ultima_pelicula = categoria_actual.peliculas.anterior
+            ultima_pelicula.siguiente = nueva_pelicula
+            nueva_pelicula.anterior = ultima_pelicula
+            nueva_pelicula.siguiente = categoria_actual.peliculas
+            categoria_actual.peliculas.anterior = nueva_pelicula
 
     def obtener_categorias(self):
         categorias = []
-
-        if not self.esta_vacia():
-            nodo_actual = self.primero
-
+        if self.cabeza is not None:
+            categoria_actual = self.cabeza
             while True:
-                categoria = nodo_actual.pelicula.categoria
-
-                if categoria not in categorias:
-                    categorias.append(categoria)
-
-                nodo_actual = nodo_actual.siguiente
-
-                if nodo_actual == self.primero:
+                categorias.append(categoria_actual.nombre)
+                categoria_actual = categoria_actual.siguiente
+                if categoria_actual == self.cabeza:
                     break
-
         return categorias
 
-    def obtener_peliculas_por_categoria(self, categoria):
-        peliculas_por_categoria = []
+    def obtener_peliculas(self, categoria):
+        peliculas = []
+        categoria_actual = self.cabeza
+        while categoria_actual.nombre != categoria:
+            categoria_actual = categoria_actual.siguiente
+            if categoria_actual == self.cabeza:
+                print("La categoría especificada no existe.")
+                return peliculas
 
-        if not self.esta_vacia():
-            nodo_actual = self.primero
-
+        if categoria_actual.peliculas is not None:
+            pelicula_actual = categoria_actual.peliculas
             while True:
-                if nodo_actual.pelicula.categoria == categoria:
-                    peliculas_por_categoria.append(nodo_actual.pelicula)
-
-                nodo_actual = nodo_actual.siguiente
-
-                if nodo_actual == self.primero:
+                peliculas.append(pelicula_actual.titulo)
+                pelicula_actual = pelicula_actual.siguiente
+                if pelicula_actual == categoria_actual.peliculas:
                     break
 
-        return peliculas_por_categoria
+        return peliculas
+

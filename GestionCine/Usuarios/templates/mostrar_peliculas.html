@@ -1,14 +1,59 @@
-{% for categoria in categorias %}
-    <h2>{{ categoria }}</h2>
-    <ul>
-        {% for pelicula in peliculas_por_categoria[categoria] %}
-            <li>{{ pelicula.titulo }}</li>
-            <li>{{ pelicula.director }}</li>
-            <li>{{ pelicula.anio }}</li>
-            <li>{{ pelicula.fecha }}</li>
-            <li>{{ pelicula.hora }}</li>
-            <li>{{ pelicula.imagen }}</li>
-            <li>{{ pelicula.precio }}</li>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Películas</title>
+</head>
+<body>
+    <form method="POST" action="{% url 'cargar_peliculas' %}">
+        {% csrf_token %}
+        <select name="categoria" required>
+            {% for categoria in categorias %}
+                <option value="{{ categoria }}">{{ categoria }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Cargar</button>
+    </form>
+    
+    
+    <form method='POST' action="{% url 'mostrar_peliculas' %}">
+        {% for categoria in categorias %}
+        <h2>{{ categoria }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Director</th>
+                    <th>Año</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Imagen</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>            
+                    {% for pelicula in peliculas_por_categoria %}
+                    <tr>
+                        <td>{{ pelicula.titulo }}</td>
+                        <td>{{ pelicula.director }}</td>
+                        <td>{{ pelicula.anio }}</td>
+                        <td>{{ pelicula.fecha }}</td>
+                        <td>{{ pelicula.hora }}</td>
+                        <td>{{ pelicula.imagen }}</td>
+                        <td>{{ pelicula.precio }}</td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
         {% endfor %}
-    </ul>
-{% endfor %}
+    </form>
+    
+</body>
+</html>
+
+
+
+
+
+
+

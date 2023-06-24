@@ -77,6 +77,12 @@
         <input type="text" name="correo" placeholder="Correo" required>
         <!-- Otros campos del formulario -->
         <button type="submit">Eliminar</button>
+    </form>
+    <form method="POST" action="{% url 'administrador'%}">
+        {% csrf_token %}
+        <button type="submit">Regresar</button>
+    </form>    
+
 
 </body>
 </html>

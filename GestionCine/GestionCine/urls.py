@@ -19,7 +19,7 @@ from django.urls import path
 from Usuarios.views import login
 from Usuarios.views import pagina_administrador
 from Usuarios.views import pagina_cliente
-from Usuarios.views import mostrar_peliculas
+from Usuarios.views import mostrar_peliculas, cargar_peliculas
 from Usuarios.views import gestionar_usuarios, crear_usuario, mostrar_usuarios, cargar_xml, modificar_usuario, eliminar_usuario
 
 urlpatterns = [
@@ -34,4 +34,5 @@ urlpatterns = [
     path('cargar_xml/',cargar_xml, name='cargar_xml'), 
     path('modificar_usuario/', modificar_usuario, name='modificar_usuario'),
     path('eliminar_usuario/', eliminar_usuario, name='eliminar_usuario'),
+    path('cargar_peliculas/', cargar_peliculas, name='cargar_peliculas' ),
 ]

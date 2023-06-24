@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 import xml.etree.ElementTree as ET
 from .Lista_Usuarios import ListaEnlazadaSimple, Usuario
-from .Pelicula import ListaDoblementeEnlazadaCircular, Pelicula
+from .Pelicula import ListaCircularDoblementeEnlazada, Pelicula, Categoria
 
-global lista_enlazada_simple
+global lista_enlazada_simple, lista_circular_doble
 lista_enlazada_simple = ListaEnlazadaSimple()
+lista_circular_doble = ListaCircularDoblementeEnlazada()
 global lista_usuarios
 lista_usuarios = []
 
@@ -148,63 +149,72 @@ def eliminar_usuario(request):
         
     return render(request, 'gestionar_usuarios.html')
     
+def cargar_peliculas(request):
+    if request.method == 'POST':
+        tree = ET.parse('peliculas.xml')
+        root = tree.getroot()
         
-    
 
 
+        for categoria_xml in root.findall('categoria'):
+            nombre = categoria_xml.find('nombre').text
+            nueva_categoria = Categoria(nombre)
+            lista_circular_doble.agregar_categoria(nueva_categoria)
+            
+            peliculas_xml = categoria_xml.find('peliculas')
+            for pelicula_xml in peliculas_xml.findall('pelicula'):
+                titulo = pelicula_xml.find('titulo').text
+                director = pelicula_xml.find('director').text
+                anio = pelicula_xml.find('anio').text
+                fecha = pelicula_xml.find('fecha').text
+                hora = pelicula_xml.find('hora').text
+                imagen = pelicula_xml.find('imagen').text
+                precio = pelicula_xml.find('precio').text
+                nueva_pelicula = Pelicula(titulo, director, anio, fecha, hora, imagen, precio)
+                lista_circular_doble.agregar_pelicula(nueva_categoria,titulo,director,anio,fecha,hora,imagen,precio)
+        
+        
+    categorias = lista_circular_doble.obtener_categorias()
+    peliculas = lista_circular_doble.obtener_peliculas(categorias)        
+                
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def cargar_peliculas():
-    lista_peliculas = ListaDoblementeEnlazadaCircular()
-
-    # Cargar datos del XML en la lista
-    tree = ET.parse("peliculas.xml")
-    root = tree.getroot()
-
-    for categoria in root.findall('categoria'):
-        nombre_categoria = categoria.find('nombre').text
-
-        for pelicula in categoria.find('peliculas').findall('pelicula'):
-            titulo = pelicula.find('titulo').text
-            director = pelicula.find('director').text
-            anio = pelicula.find('anio').text
-            fecha = pelicula.find('fecha').text
-            hora = pelicula.find('hora').text
-            imagen_element = pelicula.find('imagen')
-            imagen = imagen_element.text if imagen_element is not None else 'vacio'
-            precio_element = pelicula.find('precio')
-            precio = precio_element.text if precio_element is not None else 'vacio'
-
-            pelicula_obj = Pelicula(titulo, director, anio, fecha, hora, imagen, precio)
-            pelicula_obj.categoria = nombre_categoria
-            lista_peliculas.agregar_pelicula(pelicula_obj)
-
-    return lista_peliculas
+    return render(request, 'mostrar_peliculas.html', {'categorias': categorias, 'peliculas_por_categoria': peliculas})
 
 
 def mostrar_peliculas(request):
-    lista_peliculas = cargar_peliculas()
+    tree = ET.parse('peliculas.xml')
+    root = tree.getroot()
 
-    # Obtener y mostrar las categorías
-    categorias = lista_peliculas.obtener_categorias()
+    categorias = []
+    peliculas_por_categoria = []
 
-    peliculas_por_categoria = {}
-    for categoria in categorias:
-        peliculas_por_categoria[categoria] = lista_peliculas.obtener_peliculas_por_categoria(categoria)
+    for categoria_xml in root.findall('categoria'):
+        nombre = categoria_xml.find('nombre').text
+        categorias.append(nombre)
 
-    return render(request, 'mostrar_peliculas.html', {'categorias': categorias, 'peliculas_por_categoria': peliculas_por_categoria})
+        peliculas_xml = categoria_xml.find('peliculas')
+        peliculas = []
+        for pelicula_xml in peliculas_xml.findall('pelicula'):
+            titulo = pelicula_xml.find('titulo').text
+            director = pelicula_xml.find('director').text
+            anio = pelicula_xml.find('anio').text
+            fecha = pelicula_xml.find('fecha').text
+            hora = pelicula_xml.find('hora').text
+            imagen = pelicula_xml.find('imagen').text
+            precio = pelicula_xml.find('precio').text
+            peliculas.append({
+                'titulo': titulo,
+                'director': director,
+                'anio': anio,
+                'fecha': fecha,
+                'hora': hora,
+                'imagen': imagen,
+                'precio': precio
+            })
+
+        peliculas_por_categoria.append(peliculas)
+
+    return render(request, 'mostrar_peliculas.html', {'categorias': categorias, 'peliculas_por_categoria': peliculas})
+
 
