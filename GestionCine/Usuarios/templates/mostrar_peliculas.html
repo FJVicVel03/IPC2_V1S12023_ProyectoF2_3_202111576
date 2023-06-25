@@ -5,7 +5,7 @@
     <title>Ver Películas</title>
 </head>
 <body>
-    <form method="POST" action="{% url 'cargar_peliculas' %}">
+    <form method="POST" action="{% url 'mostrar_peliculas' %}">
         {% csrf_token %}
         <select name="categoria" required>
             {% for categoria in categorias %}

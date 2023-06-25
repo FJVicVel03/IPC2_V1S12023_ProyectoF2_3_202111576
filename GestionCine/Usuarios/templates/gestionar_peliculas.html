@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Películas</title>
+</head>
+<body>
+    <h2>Añadir categoria</h2>
+    <form method="POST" action="{% url 'agregar_categoria' %}">
+        {% csrf_token %}
+        <!-- Aquí irían los campos del formulario para crear un usuario -->
+        <!-- Ejemplo: -->
+        <input type="text" name="categorian" placeholder="Nombre de categoria" required>
+        <!-- Otros campos del formulario -->
+        <button type="submit">Añadir categoria</button>
+    </form>
+
+    <h2>Añadir Película a Categoria</h2>
+    <form method='POST' action="{% url 'agregar_pelicula'%}">
+        {% csrf_token %}
+        <input type="text" name="peliculan" placeholder="Titulo de la película">
+        <input type="text" name='director' placeholder="Director">
+        <input type="text" name='anio' placeholder="Año">
+        <input type="text" name="fecha" placeholder="Fecha">
+        <input type="text" name="hora" placeholder="Hora">
+        <input type="text" name="imagen" placeholder="Link de Imagen">
+        <input type="text" name="precio" placeholder="Precio">
+        <input type="text" name='categoria' placeholder="Nombre de la categoria">
+        <button type="submit">Añadir Película</button>
+    </form>
+
+    <h2>Modificar Categoria</h2>
+    <form method='POST' action="{% url 'modificar_categoria'%}">
+        {% csrf_token %}
+        <input type="text" name = "cateam" placeholder = "Categoria a modificar: ">
+        <input type="text" name = "catem" placeholder = "Nuevo nombre de categoría: ">
+        <button type = "submit">Modificar</button>
+    </form>
+
+    <h2>Modificar Película</h2>
+    <form method="POST" action="{% url 'modificar_peliculas' %}">
+        {% csrf_token %}
+
+        <input type="text" name = "categoria" placeholder = "Categoria de película:">
+        <input type="text" name = "pelicula" placeholder = "Película a modificar">
+        <input type="text" name = "titulo" placeholder = "Titulo nuevo">
+        <input type="text" name = "director" placeholder = "Nuevo Director">
+        <input type="text" name = "anio" placeholder = "Nuevo Año">
+        <input type="text" name = "fecha" placeholder = "Nueva fecha">
+        <input type="text" name = "hora" placeholder = "Nueva hora">
+        <input type="text" name = "imagen" placeholder = "Nuevo link de imagen">
+        <input type="text" name = "precio" placeholder = "Nuevo precio">
+        <button type="submit">Modificar Pelicula</button>
+    </form>
+
+    <h2>Eliminar Categoria</h2>
+    <form method = "POST" action="{% url 'eliminar_categoria' %}">
+        {% csrf_token %}
+
+        <input type="text" name = "categoriae" placeholder ="Categoría a eliminar:">
+        <button type="submit">Eliminar Categoría</button>
+    </form>
+    <h2>Eliminar Pelicula</h2>
+    <form method = "POST" action="{% url 'eliminar_pelicula' %}">
+        {% csrf_token %}
+        <input type="text" name = "categoria" placeholder = "Categoría de película: ">
+        <input type="text" name = "peliculae" placeholder ="Película a eliminar: ">
+        <button type= "submit">Eliminar Película</button>
+    </form>
+</body>
+</html>

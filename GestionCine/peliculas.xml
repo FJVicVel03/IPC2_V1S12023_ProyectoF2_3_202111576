@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <categorias>
    <categoria>
-      <nombre>Acción</nombre>
+      <nombre>Acci&#243;n</nombre>
       <peliculas>
          <pelicula>
             <titulo>Avengers: Endgame</titulo>
@@ -22,7 +21,7 @@
             <precio>45</precio>
          </pelicula>
          <pelicula>
-            <titulo>Misión Imposible: Fallout</titulo>
+            <titulo>Misi&#243;n Imposible: Fallout</titulo>
             <director>Christopher McQuarrie</director>
             <anio>2018</anio>
             <fecha>2023-06-07</fecha>
@@ -64,4 +63,4 @@
          </pelicula>
       </peliculas>
    </categoria>
-</categorias>
+   </categorias>
