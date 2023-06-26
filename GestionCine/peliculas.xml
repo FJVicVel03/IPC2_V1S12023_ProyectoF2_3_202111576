@@ -8,7 +8,7 @@
             <anio>2019</anio>
             <fecha>2023-06-05</fecha>
             <hora>18:30</hora>
-            <imagen>https://usaccinema.com/image1.png</imagen>
+            <imagen>https://static.posters.cz/image/750/avengers-endgame-whatever-it-takes-i74250.jpg</imagen>
             <precio>42</precio>
          </pelicula>
          <pelicula>
@@ -17,7 +17,7 @@
             <anio>2014</anio>
             <fecha>2023-06-06</fecha>
             <hora>20:00</hora>
-            <imagen>https://usaccinema.com/image2.png</imagen>
+            <imagen>https://play-lh.googleusercontent.com/3-eaToZuQQutGys4Wy2uIKDhb5qjgCLfPl6q-jCnZjE8W2vLxxo5QD7evneJZuI88BYY=w240-h480-rw</imagen>
             <precio>45</precio>
          </pelicula>
          <pelicula>
@@ -26,7 +26,7 @@
             <anio>2018</anio>
             <fecha>2023-06-07</fecha>
             <hora>19:15</hora>
-            <imagen>https://usaccinema.com/image2.png</imagen>
+            <imagen>https://sm.ign.com/ign_es/movie/m/mision-imp/mision-imposible-6_kky5.jpg</imagen>
             <precio>55</precio>
          </pelicula>
       </peliculas>
@@ -40,7 +40,7 @@
             <anio>2016</anio>
             <fecha>2023-06-05</fecha>
             <hora>20:30</hora>
-            <imagen>https://usaccinema.com/image5.png</imagen>
+            <imagen>https://upload.wikimedia.org/wikipedia/en/2/23/Deadpool_%282016_poster%29.png</imagen>
             <precio>65</precio>
          </pelicula>
          <pelicula>
@@ -49,18 +49,18 @@
             <anio>2011</anio>
             <fecha>2023-06-07</fecha>
             <hora>20:15</hora>
-            <imagen>https://usaccinema.com/image3.png</imagen>
+            <imagen>https://m.media-amazon.com/images/M/MV5BMjAyOTMyMzUxNl5BMl5BanBnXkFtZTcwODI4MzE0NA@@._V1_.jpg</imagen>
             <precio>42</precio>
          </pelicula>
          <pelicula>
-            <titulo>Holi</titulo>
-            <director>juju</director>
-            <anio>2022</anio>
-            <fecha>2023-06-08</fecha>
-            <hora>05:06</hora>
-            <imagen>https://usaccinema.com/image3.png</imagen>
+            <titulo>Spiderman</titulo>
+            <director>Sam Raimi</director>
+            <anio>2002</anio>
+            <fecha>2002-05-15</fecha>
+            <hora>21:00</hora>
+            <imagen>https://www.ecartelera.com/carteles/4500/4578/001_m.jpg</imagen>
             <precio>50</precio>
          </pelicula>
       </peliculas>
    </categoria>
-   </categorias>
+   <categoria><nombre>Terror</nombre><peliculas><pelicula><titulo>Chucky</titulo><director>Hoas</director><anio>2012</anio><fecha>15/09/2022</fecha><hora>16:50</hora><imagen>https://play-lh.googleusercontent.com/qOttg3_T8B4snglQBDBKvAjL8ZjWzuvIKGnT4hEqlg2sAUirGVKoQyDgxTPzlXvZXRV1JD1CORx7JMpEBaE</imagen><precio>56</precio></pelicula></peliculas></categoria></categorias>

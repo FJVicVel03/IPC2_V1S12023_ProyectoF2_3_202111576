@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Usuarios.views import login
+from Usuarios.views import login, vista_peliculas
 from Usuarios.views import pagina_administrador, eliminar_pelicula
 from Usuarios.views import pagina_cliente, modificar_categoria, modificar_peliculas, eliminar_categoria
 from Usuarios.views import mostrar_peliculas, cargar_peliculas, gestionar_peliculas, agregar_categoria, agregar_pelicula
@@ -42,4 +42,5 @@ urlpatterns = [
     path('modificar_peliculas/', modificar_peliculas, name='modificar_peliculas'),
     path('eliminar_categoria/', eliminar_categoria, name="eliminar_categoria"),
     path('eliminar_pelicula/', eliminar_pelicula, name="eliminar_pelicula"),
+    path('vista_peliculas/', vista_peliculas, name='vista_peliculas'),
 ]

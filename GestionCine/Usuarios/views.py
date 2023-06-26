@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 import xml.etree.ElementTree as ET
 from .Lista_Usuarios import ListaEnlazadaSimple, Usuario
 from .Pelicula import ListaCircularDoblementeEnlazada, Pelicula, Categoria
+from .Lista_Peliculas_Carrusel import construir_lista_doble_enlazada, obtener_titulos_lista, obtener_imagenes_lista
 
-global lista_enlazada_simple, lista_circular_doble
+global lista_enlazada_simple, lista_circular_doble, lista_peliculas
 lista_enlazada_simple = ListaEnlazadaSimple()
 lista_circular_doble = ListaCircularDoblementeEnlazada()
 global lista_usuarios
@@ -13,6 +14,12 @@ def login(request):
     if request.method == 'POST':
         correo = request.POST.get('correo')
         contrasena = request.POST.get('contrasena')
+        
+        ll = construir_lista_doble_enlazada()
+        
+        titulos = obtener_titulos_lista(ll)
+        imagenes = obtener_imagenes_lista(ll)
+
 
         # Cargar los usuarios del archivo XML en una lista enlazada simple
         
@@ -32,6 +39,11 @@ def login(request):
 
         # Realizar la búsqueda del usuario en la lista enlazada simple
         usuario_encontrado = lista_enlazada_simple.buscar(correo, contrasena)
+        
+            # Obtener titulos e imagenes desde el XML
+        
+    # Combinar titulos e imagenes en una lista de tuplas
+        peliculas = list(zip(titulos, imagenes))
 
         if usuario_encontrado:
             if usuario_encontrado.rol == 'cliente':
@@ -43,7 +55,7 @@ def login(request):
         else:
             # Usuario no encontrado, mostrar mensaje de error
             error_message = 'Correo o contraseña incorrectos'
-            return render(request, 'login.html', {'error_message': error_message})
+            return render(request, 'login.html', {'peliculas': peliculas})
     else:
         return render(request, 'login.html')
     
@@ -221,13 +233,10 @@ def mostrar_peliculas(request):
         categorias2 = lista_circular_doble.obtener_categorias()
         peliculas2 = lista_circular_doble.obtener_peliculas(categorias2)
         
-        for cate in categorias2:
-            for peli in lista_circular_doble.obtener_peliculas(cate):
-                print(peli)
                 
         
         
-    return render(request, 'mostrar_peliculas.html', {'categorias': categorias, 'peliculas_por_categoria': peliculas})
+        return render(request, 'mostrar_peliculas.html', {'categorias': categorias, 'peliculas_por_categoria': peliculas})
 
 def agregar_categoria(request):
     if request.method == "POST":
@@ -399,7 +408,6 @@ def eliminar_categoria(request):
 
     return render(request, 'gestionar_peliculas.html')
 
-
 def eliminar_pelicula(request):
     if request.method == "POST":
         categoria_buscar = request.POST.get('categoria')
@@ -434,3 +442,13 @@ def eliminar_pelicula(request):
         return render(request, 'gestionar_peliculas.html')
 
     return render(request, 'gestionar_peliculas.html')      
+
+def vista_peliculas(request):
+    
+    lista = construir_lista_doble_enlazada()
+    titulos = obtener_titulos_lista(lista)
+    imagenes = obtener_imagenes_lista(lista)
+
+    peliculas = list(zip(titulos, imagenes))
+
+    return render(request, 'login.html', {'peliculas': peliculas})
