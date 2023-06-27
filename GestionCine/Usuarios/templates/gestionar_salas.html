@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>Crear sala</head>
+    <body>
+        <h1>Crear sala</h1>
+        
+        <form method="post" action = "{% url 'crear_sala'%}">
+            {% csrf_token %}
+            <label for="sala">Sala: </label>
+            <input type="text" name="sala" required>
+            <br>
+            <label for="asiento">Asientos</label>
+            <input type="number" name="asiento" required>
+            <br>
+            <button type="submit">Guardar</button>
+        </form>
+
+        <h2>Mostrar Salas</h2>
+        <form method="POST" action="{% url 'cargar_xml_s' %}">
+            {% csrf_token %}
+            <button type="submit">Cargar XML</button>
+        </form>
+        <h1>Lista de Salas</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Cine</th>
+                    <th>Numero</th>
+                    <th>Asientos</th>
+                    <th>Acciones que se pueden realizar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sala in Salas %}
+                <tr>
+                    <td>{{ sala.cine }}</td>
+                    <td>{{ sala.n_sala }}</td>
+                    <td>{{ sala.asiento }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'eliminar_sala' sala.n_sala %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="numero" value="{{ sala.n_sala }}">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+        <h2>Modificar Usuario</h2>
+        <form method="POST" action="{% url 'modificar_sala' %}">
+            {% csrf_token %}
+            <!-- Aquí irían los campos del formulario para crear un usuario -->
+            <!-- Ejemplo: -->
+            <input type="text" name="sala" placeholder="sala" required>
+            <input type="text" name="asiento" placeholder="asiento" required>
+            <input type="text" name="nueva_sala" placeholder="nueva_sala" required>
+            <!-- Otros campos del formulario -->
+            <button type="submit">Modificar</button>
+        </form>
+    </body>
+</html>

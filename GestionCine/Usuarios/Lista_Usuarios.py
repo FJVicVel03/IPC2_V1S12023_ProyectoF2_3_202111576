@@ -35,11 +35,11 @@ class ListaEnlazadaSimple:
         else:
             actual = self.cabeza
             while actual.next is not None:
-                if actual.data.correo == data.correo:
+                if actual.data == data:
                     return
                 actual = actual.next
             actual.next = nuevo
-            if actual.data.correo == data.correo:
+            if actual.data == data:
                 return
             actual.next = nuevo
 

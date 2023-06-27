@@ -1,12 +1,18 @@
 from django.shortcuts import render, redirect
 import xml.etree.ElementTree as ET
+
+import requests
 from .Lista_Usuarios import ListaEnlazadaSimple, Usuario
 from .Pelicula import ListaCircularDoblementeEnlazada, Pelicula, Categoria
 from .Lista_Peliculas_Carrusel import construir_lista_doble_enlazada, obtener_titulos_lista, obtener_imagenes_lista
+from .Lista_Salas import ListaDobleEnlazada
+from .Lista_Tarjetas import ListaTarjetasEnlazada
 
-global lista_enlazada_simple, lista_circular_doble, lista_peliculas
+global lista_enlazada_simple, lista_circular_doble, lista_peliculas, lista_salas, lista_tarjetas
 lista_enlazada_simple = ListaEnlazadaSimple()
 lista_circular_doble = ListaCircularDoblementeEnlazada()
+lista_salas = ListaDobleEnlazada()
+lista_tarjetas = ListaTarjetasEnlazada()
 global lista_usuarios
 lista_usuarios = []
 
@@ -69,10 +75,21 @@ def gestionar_usuarios(request):
     return render(request, 'gestionar_usuarios.html')
 def gestionar_peliculas(request):
     return render(request, 'gestionar_peliculas.html')
+def gestionar_salas(request):
+    return render(request, 'gestionar_salas.html')
+
+def gestionar_tarjetas(request):
+    return render(request, 'gestionar_tarjetas.html')
 
 def cargar_xml(request):
     if request.method == 'POST':
         lista_enlazada_simple.CargarXML(1)
+        response = requests.get('http://localhost:5007/getUsuarios')
+        u_Api = response.json()
+        
+        for usuario in u_Api:
+            lista_enlazada_simple.add(usuario)
+        print(u_Api)
     return render(request, 'gestionar_usuarios.html', {'usuarios': lista_enlazada_simple})
 
 
@@ -232,10 +249,7 @@ def mostrar_peliculas(request):
         peliculas_por_categoria.append(peliculas)
         categorias2 = lista_circular_doble.obtener_categorias()
         peliculas2 = lista_circular_doble.obtener_peliculas(categorias2)
-        
-                
-        
-        
+       
         return render(request, 'mostrar_peliculas.html', {'categorias': categorias, 'peliculas_por_categoria': peliculas})
 
 def agregar_categoria(request):
@@ -452,3 +466,89 @@ def vista_peliculas(request):
     peliculas = list(zip(titulos, imagenes))
 
     return render(request, 'login.html', {'peliculas': peliculas})
+
+def mostrar_sala(request):
+    return render(request, 'gestionar_salas.html', {'Salas': lista_salas})
+
+def cargar_xml_s(request):
+    if request.method == "POST":
+        lista_salas.CargarXML_LED(1)
+    return render(request, 'gestionar_salas.html', {'Salas': lista_salas})
+
+def crear_sala(request):
+    if request.method == 'POST':
+        cine = 'Cine ABC'
+        sala = request.POST.get('sala')
+        asiento = request.POST.get('asiento')
+        lista_salas.agregarXML_LED(sala, asiento)
+        return redirect('cargar_xml_s')
+    return render(request, 'gestionar_salas.html')
+
+def modificar_sala(request):
+    if request.method == 'POST':
+        sala = request.POST['sala']
+        asientos = request.POST['asiento']
+        nueva_sala = request.POST['nueva_sala']
+
+        lista_salas.editarXML_LED(sala, asientos, nueva_sala)
+
+        return render(request, 'gestionar_salas.html')
+
+    return render(request, 'gestionar_salas.html')
+
+def eliminar_sala(request, numero):
+    if request.method == 'POST':
+        numero = request.POST.get('numero')
+        lista_salas.eliminar_LED(numero)
+        return render(request, 'gestionar_salas.html')
+    return redirect('cargar_xml_s')
+
+
+def mostrar_tarjeta(request):
+    return render(request, 'gestionar_tarjetas.html', {'Tarjetas': lista_tarjetas})
+
+def cargar_xml_t(request):
+    if request.method == "POST":
+        lista_tarjetas.CargarXML_TAR(1)
+        #response = requests.get('http://localhost:5007/getTarjetas')
+        #tarjetas_API = response.json()
+        #print(tarjetas_API)
+
+        #for tarj in tarjetas_API:
+        #    tarjeta = {
+        #        'id': tarj['tipo'],
+         #       'tipo': tarj['numero'],
+        #        'numero': tarj['titular'],
+        #        'titular': tarj['fecha_expiracion']
+         #   }
+         #   lenTarjetas.add(tarjeta)
+    return render(request, 'gestionar_tarjetas.html', {'Tarjetas': lista_tarjetas})
+
+def crear_tarjeta(request):
+    if request.method == 'POST':
+        tipo = request.POST.get('tipo')
+        numero = request.POST.get('numero')
+        titular = request.POST.get('titular')
+        fechaexp = request.POST.get('fecha_expiracion')
+        lista_tarjetas.agregarXML_TAR(tipo, numero, titular, fechaexp)
+        return redirect('cargar_xml_t')
+    return render(request, 'gestionar_tarjetas.html')
+
+def modificar_tarjeta(request):
+    if request.method == 'POST':
+        tipo = request.POST['tipo']
+        numero = request.POST['numero']
+        titular = request.POST['titular']
+        fechaexp = request.POST['fecha_expiracion']
+
+        lista_tarjetas.editarXML_TAR(tipo, numero, titular, fechaexp)
+
+        return render(request, 'gestionar_tarjetas.html')
+
+    return render(request, 'gestionar_tarjetas.html')
+
+def eliminar_tarjeta(request, numero):
+    if request.method == 'POST':
+        numero = request.POST.get('numero')
+        lista_tarjetas.eliminar_TAR(numero)
+    return redirect('cargar_xml_t')

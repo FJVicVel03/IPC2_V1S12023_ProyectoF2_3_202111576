@@ -63,4 +63,4 @@
          </pelicula>
       </peliculas>
    </categoria>
-   <categoria><nombre>Terror</nombre><peliculas><pelicula><titulo>Chucky</titulo><director>Hoas</director><anio>2012</anio><fecha>15/09/2022</fecha><hora>16:50</hora><imagen>https://play-lh.googleusercontent.com/qOttg3_T8B4snglQBDBKvAjL8ZjWzuvIKGnT4hEqlg2sAUirGVKoQyDgxTPzlXvZXRV1JD1CORx7JMpEBaE</imagen><precio>56</precio></pelicula></peliculas></categoria></categorias>
+   <categoria><nombre>Terror</nombre><peliculas><pelicula><titulo>Chucky</titulo><director>Hoas</director><anio>2012</anio><fecha>15/09/2022</fecha><hora>16:50</hora><imagen>https://play-lh.googleusercontent.com/qOttg3_T8B4snglQBDBKvAjL8ZjWzuvIKGnT4hEqlg2sAUirGVKoQyDgxTPzlXvZXRV1JD1CORx7JMpEBaE</imagen><precio>56</precio></pelicula></peliculas></categoria><categoria><nombre>Ficci&#243;n</nombre><peliculas><pelicula><titulo>StarWars</titulo><director>asdad</director><anio>1970</anio><fecha>11/05/1970</fecha><hora>15:20</hora><imagen>https://lumiere-a.akamaihd.net/v1/images/lswss-keyart-digital-1e_33_c1428772.jpeg?region=1%2C0%2C999%2C999</imagen><precio>70</precio></pelicula></peliculas></categoria></categorias>

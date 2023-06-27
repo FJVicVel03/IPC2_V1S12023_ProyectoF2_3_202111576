@@ -21,6 +21,8 @@ from Usuarios.views import pagina_administrador, eliminar_pelicula
 from Usuarios.views import pagina_cliente, modificar_categoria, modificar_peliculas, eliminar_categoria
 from Usuarios.views import mostrar_peliculas, cargar_peliculas, gestionar_peliculas, agregar_categoria, agregar_pelicula
 from Usuarios.views import gestionar_usuarios, crear_usuario, mostrar_usuarios, cargar_xml, modificar_usuario, eliminar_usuario
+from Usuarios.views import crear_sala, cargar_xml_s, modificar_sala, eliminar_sala, gestionar_salas
+from Usuarios.views import crear_tarjeta, cargar_xml_t, modificar_tarjeta, gestionar_tarjetas, eliminar_tarjeta
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,4 +45,16 @@ urlpatterns = [
     path('eliminar_categoria/', eliminar_categoria, name="eliminar_categoria"),
     path('eliminar_pelicula/', eliminar_pelicula, name="eliminar_pelicula"),
     path('vista_peliculas/', vista_peliculas, name='vista_peliculas'),
+    path('crear_sala/', crear_sala, name='crear_sala'),
+    path('cargar_xml_s/', cargar_xml_s, name='cargar_xml_s'),
+    path('modificar_sala/', modificar_sala, name='modificar_sala'),
+    path('eliminar_sala/<str:numero>', eliminar_sala, name='eliminar_sala'),
+    path('eliminar_sala/', eliminar_sala, name="eliminar_sala"),
+    path('gestionar_salas/', gestionar_salas, name='gestionar_salas'),
+    path('crear_tarjeta/', crear_tarjeta, name='crear_tarjeta'),
+    path('cargar_xml_t/', cargar_xml_t, name='cargar_xml_t'),
+    path('modificar_tarjeta/', modificar_tarjeta, name='modificar_tarjeta'),
+    path('eliminar_tarjeta/<str:numero>', eliminar_tarjeta, name='eliminar_tarjeta'),
+    path('eliminar_tarjeta/', eliminar_tarjeta, name="eliminar_tarjeta"),
+    path('gestionar_tarjetas/', gestionar_tarjetas, name='gestionar_tarjetas'),
 ]

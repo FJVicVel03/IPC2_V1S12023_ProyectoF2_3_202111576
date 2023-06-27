@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestionar Tarjetas</title>
+</head>
+<body>
+
+    <h1>Crear Tarjeta</h1>
+        
+        <form method="post" action = "{% url 'crear_tarjeta'%}">
+            {% csrf_token %}
+            <label for="tipo">Tipo: </label>
+            <input type="text" name="tipo" required>
+            <br>
+            <label for="numero">Numero: </label>
+            <input type="number" name="numero" required>
+            <br>
+            <label for="titular">Titular: </label>
+            <input type="text" name="titular" required>
+            <br>
+            <label for="fecha_expiracion">Fecha Expiración: </label>
+            <input type="text" name="fecha_expiracion" required>
+            <br>
+            <button type="submit">Guardar</button>
+        </form>    
+
+    <form method="POST" action="{% url 'cargar_xml_t' %}">
+        {% csrf_token %}
+        <button type="submit">Cargar XML</button>
+    </form>
+
+    <h1>Lista de Tarjetas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Numero</th>
+                <th>Titular</th>
+                <th>Fecha de expiración</th>
+                <th>Acciones que se pueden realizar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tarjeta in Tarjetas %}
+            <tr>
+                <td>{{ tarjeta.tipo }}</td>
+                <td>{{ tarjeta.numero }}</td>
+                <td>{{ tarjeta.titular }}</td>
+                <td>{{ tarjeta.fecha_exp }}</td>
+                <td>
+                    <form method="POST" action="{% url 'eliminar_tarjeta' tarjeta.numero %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="numero" value="{{ tarjeta.numero }}">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Modificar Tarjeta</h2>
+    <form method="POST" action="{% url 'modificar_tarjeta' %}">
+        {% csrf_token %}
+        <input type="text" name="tipo" placeholder="tipo" required>
+        <input type="text" name="numero" placeholder="numero" required>
+        <input type="text" name="titular" placeholder="titular" required>
+        <input type="text" name="fecha_expiracion" placeholder="fecha_expiracion" required>
+        <!-- Otros campos del formulario -->
+        <button type="submit">Modificar</button>
+    </form>
+</body>
+</html>
