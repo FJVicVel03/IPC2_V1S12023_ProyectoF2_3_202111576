@@ -16,10 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Usuarios.views import login, vista_peliculas
-from Usuarios.views import pagina_administrador, eliminar_pelicula
-from Usuarios.views import pagina_cliente, modificar_categoria, modificar_peliculas, eliminar_categoria
-from Usuarios.views import mostrar_peliculas, cargar_peliculas, gestionar_peliculas, agregar_categoria, agregar_pelicula
+from Usuarios.views import login, vista_peliculas, pagina_login
+from Usuarios.views import pagina_administrador
+from Usuarios.views import pagina_cliente, crear_pelicula, cargar_peliculas_xml, eliminar_categoria, eliminar_pelicula, modificar_pelicula
+from Usuarios.views import mostrar_peliculas, cargar_peliculas, gestionar_peliculas, modificar_categoria
 from Usuarios.views import gestionar_usuarios, crear_usuario, mostrar_usuarios, cargar_xml, modificar_usuario, eliminar_usuario
 from Usuarios.views import crear_sala, cargar_xml_s, modificar_sala, eliminar_sala, gestionar_salas
 from Usuarios.views import crear_tarjeta, cargar_xml_t, modificar_tarjeta, gestionar_tarjetas, eliminar_tarjeta
@@ -27,6 +27,7 @@ from Usuarios.views import crear_tarjeta, cargar_xml_t, modificar_tarjeta, gesti
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', login, name='login'),
+    path('pagina_login/', pagina_login, name='pagina_login'),
     path('administrador/', pagina_administrador, name='administrador'),
     path('cliente/', pagina_cliente , name='cliente'),
     path('peliculas/',mostrar_peliculas, name='mostrar_peliculas'),
@@ -38,12 +39,12 @@ urlpatterns = [
     path('modificar_usuario/', modificar_usuario, name='modificar_usuario'),
     path('eliminar_usuario/', eliminar_usuario, name='eliminar_usuario'),
     path('cargar_peliculas/', cargar_peliculas, name='cargar_peliculas' ),
-    path('agregar_categorias/', agregar_categoria, name='agregar_categoria'),
-    path('agregar_pelicula/', agregar_pelicula, name='agregar_pelicula'),
+    path('crear_pelicula/', crear_pelicula, name='crear_pelicula'),  # ACÁ EMPIEZA PELICULAS
+    path('cargar_peliculas_xml', cargar_peliculas_xml, name='cargar_peliculas_xml'),
     path('modificar_categoria/', modificar_categoria, name="modificar_categoria"),
-    path('modificar_peliculas/', modificar_peliculas, name='modificar_peliculas'),
     path('eliminar_categoria/', eliminar_categoria, name="eliminar_categoria"),
-    path('eliminar_pelicula/', eliminar_pelicula, name="eliminar_pelicula"),
+    path('eliminar_pelicula/<str:nombre>', eliminar_pelicula, name="eliminar_pelicula"),
+    path('modificar_pelicula/', modificar_pelicula, name="modificar_pelicula"),
     path('vista_peliculas/', vista_peliculas, name='vista_peliculas'),
     path('crear_sala/', crear_sala, name='crear_sala'),
     path('cargar_xml_s/', cargar_xml_s, name='cargar_xml_s'),

@@ -1,6 +1,6 @@
 <categorias>
    <categoria>
-      <nombre>Acci&#243;n</nombre>
+      <nombre>Acci&#65533;n</nombre>
       <peliculas>
          <pelicula>
             <titulo>Avengers: Endgame</titulo>
@@ -21,7 +21,7 @@
             <precio>45</precio>
          </pelicula>
          <pelicula>
-            <titulo>Misi&#243;n Imposible: Fallout</titulo>
+            <titulo>Misi&#65533;n Imposible: Fallout</titulo>
             <director>Christopher McQuarrie</director>
             <anio>2018</anio>
             <fecha>2023-06-07</fecha>
@@ -35,13 +35,13 @@
       <nombre>Comedia</nombre>
       <peliculas>
          <pelicula>
-            <titulo>Deadpool</titulo>
-            <director>Tim Miller</director>
-            <anio>2016</anio>
-            <fecha>2023-06-05</fecha>
-            <hora>20:30</hora>
-            <imagen>https://upload.wikimedia.org/wikipedia/en/2/23/Deadpool_%282016_poster%29.png</imagen>
-            <precio>65</precio>
+            <titulo>Batman</titulo>
+            <director>James Cameron</director>
+            <anio>2021</anio>
+            <fecha>2023-06-19</fecha>
+            <hora>07:46</hora>
+            <imagen>https://pics.filmaffinity.com/The_Batman-449856406-large.jpg</imagen>
+            <precio>15</precio>
          </pelicula>
          <pelicula>
             <titulo>Bridesmaids</titulo>
@@ -61,6 +61,43 @@
             <imagen>https://www.ecartelera.com/carteles/4500/4578/001_m.jpg</imagen>
             <precio>50</precio>
          </pelicula>
+         <pelicula>
+            <titulo>Peacemaker</titulo>
+            <director>Hudson Hornet</director>
+            <anio>2021</anio>
+            <fecha>2023-06-30</fecha>
+            <hora>13:55</hora>
+            <imagen>https://static.wikia.nocookie.net/dccu/images/e/e0/TV%27s_Peacemaker_-_Peacemaker.jpeg/revision/latest?cb=20211216145344</imagen>
+            <precio>55</precio>
+         </pelicula>
       </peliculas>
    </categoria>
-   <categoria><nombre>Terror</nombre><peliculas><pelicula><titulo>Chucky</titulo><director>Hoas</director><anio>2012</anio><fecha>15/09/2022</fecha><hora>16:50</hora><imagen>https://play-lh.googleusercontent.com/qOttg3_T8B4snglQBDBKvAjL8ZjWzuvIKGnT4hEqlg2sAUirGVKoQyDgxTPzlXvZXRV1JD1CORx7JMpEBaE</imagen><precio>56</precio></pelicula></peliculas></categoria><categoria><nombre>Ficci&#243;n</nombre><peliculas><pelicula><titulo>StarWars</titulo><director>asdad</director><anio>1970</anio><fecha>11/05/1970</fecha><hora>15:20</hora><imagen>https://lumiere-a.akamaihd.net/v1/images/lswss-keyart-digital-1e_33_c1428772.jpeg?region=1%2C0%2C999%2C999</imagen><precio>70</precio></pelicula></peliculas></categoria></categorias>
+   <categoria>
+      <nombre>Terror</nombre>
+      <peliculas>
+         <pelicula>
+            <titulo>Chucky</titulo>
+            <director>Hoas</director>
+            <anio>2012</anio>
+            <fecha>15/09/2022</fecha>
+            <hora>16:50</hora>
+            <imagen>https://play-lh.googleusercontent.com/qOttg3_T8B4snglQBDBKvAjL8ZjWzuvIKGnT4hEqlg2sAUirGVKoQyDgxTPzlXvZXRV1JD1CORx7JMpEBaE</imagen>
+            <precio>56</precio>
+         </pelicula>
+         </peliculas>
+   </categoria>
+   <categoria>
+      <nombre>Ficcion</nombre>
+      <peliculas>
+         <pelicula>
+            <titulo>StarWars</titulo>
+            <director>asdad</director>
+            <anio>1970</anio>
+            <fecha>11/05/1970</fecha>
+            <hora>15:20</hora>
+            <imagen>https://lumiere-a.akamaihd.net/v1/images/lswss-keyart-digital-1e_33_c1428772.jpeg?region=1%2C0%2C999%2C999</imagen>
+            <precio>70</precio>
+         </pelicula>
+      </peliculas>
+   </categoria>
+   </categorias>

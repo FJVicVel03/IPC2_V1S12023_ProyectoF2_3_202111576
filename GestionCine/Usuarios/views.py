@@ -1,3 +1,4 @@
+from xml.dom import minidom
 from django.shortcuts import render, redirect
 import xml.etree.ElementTree as ET
 
@@ -8,7 +9,7 @@ from .Lista_Peliculas_Carrusel import construir_lista_doble_enlazada, obtener_ti
 from .Lista_Salas import ListaDobleEnlazada, Salas
 from .Lista_Tarjetas import ListaTarjetasEnlazada
 
-global lista_enlazada_simple, lista_circular_doble, lista_peliculas, lista_salas, lista_tarjetas
+global lista_enlazada_simple, lista_circular_doble, lista_peliculas, lista_salas, lista_tarjetas, lista_categorias
 lista_enlazada_simple = ListaEnlazadaSimple()
 lista_circular_doble = ListaCircularDoblementeEnlazada()
 lista_salas = ListaDobleEnlazada()
@@ -67,6 +68,9 @@ def login(request):
     
 def pagina_cliente(request):
     return render(request, 'cliente.html')
+
+def pagina_login(request):
+    return render(request, 'login.html')
 
 def pagina_administrador(request):
     return render(request, 'administrador.html')
@@ -211,251 +215,115 @@ def cargar_peliculas(request):
 
 
     return render(request, 'mostrar_peliculas.html', {'categorias': categorias, 'peliculas_por_categoria': peliculas})
-
+###---------------------------------------------------------
 def mostrar_peliculas(request):
-    tree = ET.parse('peliculas.xml')
-    root = tree.getroot()
-
-    categorias = []
-    peliculas_por_categoria = []
-
-    for categoria_xml in root.findall('categoria'):
-        nombre = categoria_xml.find('nombre').text
-        categorias.append(nombre)
-        lista_circular_doble.agregar_categoria(nombre)
-
-        peliculas_xml = categoria_xml.find('peliculas')
-        peliculas = []
-        for pelicula_xml in peliculas_xml.findall('pelicula'):
-            titulo = pelicula_xml.find('titulo').text
-            director = pelicula_xml.find('director').text
-            anio = pelicula_xml.find('anio').text
-            fecha = pelicula_xml.find('fecha').text
-            hora = pelicula_xml.find('hora').text
-            imagen = pelicula_xml.find('imagen').text
-            precio = pelicula_xml.find('precio').text
-            lista_circular_doble.agregar_pelicula(nombre, titulo,director,anio,fecha,hora,imagen,precio)
-            peliculas.append({
-                'titulo': titulo,
-                'director': director,
-                'anio': anio,
-                'fecha': fecha,
-                'hora': hora,
-                'imagen': imagen,
-                'precio': precio
-            })
-            
-
-        peliculas_por_categoria.append(peliculas)
-        categorias2 = lista_circular_doble.obtener_categorias()
-        peliculas2 = lista_circular_doble.obtener_peliculas(categorias2)
-       
-        return render(request, 'mostrar_peliculas.html', {'categorias': categorias, 'peliculas_por_categoria': peliculas})
-
-def agregar_categoria(request):
+    
+    return render(request, 'gestionar_peliculas.html', {"peliculas": lista_circular_doble}) 
+def cargar_peliculas_xml(request):
     if request.method == "POST":
-        categorian = request.POST.get('categorian')
         
-        # Cargar el archivo XML
-        tree = ET.parse('peliculas.xml')
-        root = tree.getroot()
+        lista = lista_circular_doble.obtener_peliculas_xml()
+        
+        print(lista)
+        return render(request, 'gestionar_peliculas.html', {'peliculas': lista})
 
-        # Verificar si la categoría ya existe
-        categorias_existentes = [categoria.find('nombre').text for categoria in root.findall('categoria')]
-        if categorian in categorias_existentes:
-            mensaje = "La categoría ya existe."
-        else:
-            # Crear el elemento de categoría y agregarlo al árbol XML
-            nueva_categoria = ET.Element('categoria')
-            nombre = ET.SubElement(nueva_categoria, 'nombre')
-            nombre.text = categorian
-            peliculas = ET.SubElement(nueva_categoria,'peliculas')
-            root.append(nueva_categoria)
-            lista_circular_doble.agregar_categoria(nueva_categoria)
-
-            # Guardar los cambios en el archivo XML
-            tree.write('peliculas.xml')
-
-            categoriasn = lista_circular_doble.obtener_categorias()
-
-        return render(request, 'gestionar_peliculas.html')
-    else:
-        return render(request, 'gestionar_peliculas.html')
-
-def agregar_pelicula(request):
-    if request.method == "POST":
-        peliculan = request.POST.get('peliculan')
+def crear_pelicula(request):
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        categoria = request.POST.get('categoria')
+        titulo = request.POST.get('titulo')
         director = request.POST.get('director')
         anio = request.POST.get('anio')
         fecha = request.POST.get('fecha')
         hora = request.POST.get('hora')
         imagen = request.POST.get('imagen')
         precio = request.POST.get('precio')
-        categoria_elegida = request.POST.get('categoria')
 
-        # Cargar el archivo XML
-        tree = ET.parse('peliculas.xml')
-        root = tree.getroot()
+        nueva_pelicula = Pelicula(titulo, director, anio, fecha, hora, imagen, precio)
 
-        # Buscar la categoría seleccionada
-        categoria = root.find(".//categoria[nombre='" + categoria_elegida + "']")
-        if categoria is not None:
-            # Crear el elemento de película y agregarlo a la categoría
-            nueva_pelicula = ET.Element('pelicula')
-            titulo_element = ET.SubElement(nueva_pelicula, 'titulo')
-            titulo_element.text = peliculan
-            director_element = ET.SubElement(nueva_pelicula, 'director')
-            director_element.text = director
-            anio_element = ET.SubElement(nueva_pelicula, 'anio')
-            anio_element.text = anio
-            fecha_element = ET.SubElement(nueva_pelicula, 'fecha')
-            fecha_element.text = fecha
-            hora_element = ET.SubElement(nueva_pelicula, 'hora')
-            hora_element.text = hora
-            imagen_element = ET.SubElement(nueva_pelicula, 'imagen')
-            imagen_element.text = imagen
-            precio_element = ET.SubElement(nueva_pelicula, 'precio')
-            precio_element.text = precio
+        # Cargar las películas del archivo XML en la lista circular doble
+        lista_circular_doble.cargar_peliculas_xml()
 
-            peliculas = categoria.find('peliculas')
-            peliculas.append(nueva_pelicula)
-            asd = lista_circular_doble.obtener_categorias()
-            # Guardar los cambios en el archivo XML
-            tree.write('peliculas.xml')
+        # Agregar la película a la lista circular doble
+        categoria_encontrada = False
+        categoria_actual = lista_circular_doble.cabeza
+        while True:
+            if categoria_actual.data.nombre == categoria:
+                categoria_actual.data.agregar_pelicula(nueva_pelicula)
+                categoria_encontrada = True
+                break
+            categoria_actual = categoria_actual.siguiente
+            if categoria_actual == lista_circular_doble.cabeza:
+                break
 
-            print("Película agregada correctamente.")
-            print(asd)
-        else:
-            print("La categoría seleccionada no existe.")
+        if not categoria_encontrada:
+            nueva_categoria = Categoria(categoria)
+            nueva_categoria.agregar_pelicula(nueva_pelicula)
+            lista_circular_doble.agregar(nueva_categoria)
 
-        return render(request, 'gestionar_peliculas.html')
-
-def modificar_categoria(request):
-    if request.method == "POST":
-        tree = ET.parse('peliculas.xml')
-        root = tree.getroot()
-
-        categoria_anterior = request.POST.get('cateam')
-        categoria = root.find(".//categoria[nombre='" + categoria_anterior + "']")
-
-        if categoria is not None:
-            categoria_nueva = request.POST.get('catem')
-            categoria.find('nombre').text = categoria_nueva
-
-            # Guardar los cambios en el archivo XML
-            tree.write('peliculas.xml')
-
-            print("Categoria cambiada correctamente")
-        else:
-            print("La categoría especificada no existe")
-
-        return render(request, 'gestionar_peliculas.html')
-
-def modificar_peliculas(request):
-    if request.method == "POST":
-        tree = ET.parse('peliculas.xml')
-        root = tree.getroot()
-        
-        categoria_pelicula = request.POST.get('categoria')
-        pelicula_anterior = request.POST.get('pelicula')
-        
-        categoria = root.find(".//categoria[nombre='" + categoria_pelicula + "']")
-        
-        if categoria is None:
-            print("La categoría no existe")
-            return
-        
-        pelicula = categoria.find(".//pelicula[titulo='" + pelicula_anterior + "']")
-        
-        if pelicula is None:
-            print("La película no existe")
-            return
-
-        nuevo_titulo = request.POST.get('titulo')
-        nuevo_director = request.POST.get('director')
-        nuevo_anio = request.POST.get('anio')
-        nueva_fecha = request.POST.get('fecha')
-        nueva_hora = request.POST.get('hora')
-        nueva_imagen = request.POST.get('imagen')
-        nuevo_precio = request.POST.get('precio')
-        
-        pelicula.find('titulo').text = nuevo_titulo
-        pelicula.find('director').text = nuevo_director
-        pelicula.find('anio').text = nuevo_anio
-        pelicula.find('fecha').text = nueva_fecha
-        pelicula.find('hora').text = nueva_hora
-        pelicula.find('imagen').text = nueva_imagen
-        pelicula.find('precio').text = nuevo_precio
-
-        # Guardar los cambios en el archivo XML
-        tree.write('peliculas.xml')
-
-        print("Película modificada correctamente")
-        
-        return render(request,'gestionar_peliculas.html')
-
-def eliminar_categoria(request):
-    if request.method == "POST":
-        nombre_categoria = request.POST.get("categoriae")
-
-        # Cargar el archivo XML
-        tree = ET.parse('peliculas.xml')
-        root = tree.getroot()
-
-        # Buscar la categoría en el XML
-        categoria = root.find(".//categoria[nombre='" + nombre_categoria + "']")
-
-        if categoria is not None:
-            # Eliminar la categoría y todas sus películas
-            root.remove(categoria)
-
-            # Guardar los cambios en el archivo XML
-            tree.write('peliculas.xml')
-
-            mensaje = 'Categoría eliminada correctamente.'
-            print(mensaje)
-        else:
-            mensaje = 'La categoría no existe.'
-            print(mensaje)
+        # Agregar la película al archivo XML
+        lista_circular_doble.agregar_pelicula_xml(categoria, nueva_pelicula)
 
         return render(request, 'gestionar_peliculas.html')
 
     return render(request, 'gestionar_peliculas.html')
 
-def eliminar_pelicula(request):
+def modificar_categoria(request):
     if request.method == "POST":
-        categoria_buscar = request.POST.get('categoria')
-        pelicula_eliminar = request.POST.get('peliculae')
-
-        # Cargar el archivo XML
+        categoria_anterior = request.POST.get('categoria_anterior')
+        categoria_nueva = request.POST.get('categoria_nueva')
+        
+        lista_circular_doble.modificar_nombre_categoria(categoria_anterior,categoria_nueva)
+        lista_circular_doble.actualizar_xml(categoria_anterior,categoria_nueva)
+        
+        return render(request, 'gestionar_peliculas.html')    
+def eliminar_categoria(request):
+    if request.method == "POST":
+        categoria_eliminar = request.POST.get('categoria_eliminada')
+        
+        lista_circular_doble.eliminar_categoria(categoria_eliminar)
+        lista_circular_doble.eliminar_categoria_xml(categoria_eliminar)
+        
+        return render(request, 'gestionar_peliculas.html')
+def eliminar_pelicula(request, nombre):
+    lista_circular_doble.eliminar_pelicula_xml(nombre)
+    
+    return render(request, 'gestionar_peliculas.html')
+        
+def modificar_pelicula(request):
+    if request.method == "POST":
+        titulo_actual = request.POST.get('titulo_actual')
+        titulo_nuevo = request.POST.get('titulo_nuevo')
+        director = request.POST.get('director')
+        anio = request.POST.get('anio')
+        fecha = request.POST.get('fecha')
+        hora = request.POST.get('hora')
+        imagen = request.POST.get('imagen')
+        precio = request.POST.get('precio')
+        print("Si recibe datos")
         tree = ET.parse('peliculas.xml')
         root = tree.getroot()
+        
+        for categoria in root.findall('categoria'):
+            peliculas = categoria.find('peliculas')
+            print("Busca en categorias")
+            for pelicula in peliculas.findall('pelicula'):
+                if pelicula.find('titulo').text == titulo_actual:
+                    print("pelicula encontrada")
+                    pelicula.find('titulo').text = titulo_nuevo
+                    pelicula.find('director').text = director
+                    pelicula.find('anio').text = anio
+                    pelicula.find('fecha').text = fecha
+                    pelicula.find('hora').text = hora
+                    pelicula.find('imagen').text = imagen
+                    pelicula.find('precio').text = precio
+        
+        tree.write('peliculas.xml')
+        
+    return render(request, 'gestionar_peliculas.html')
 
-        # Buscar la categoría en el XML
-        categoria = root.find(".//categoria[nombre='" + categoria_buscar + "']")
 
-        if categoria is not None:
-            # Buscar la película en la categoría
-            pelicula = categoria.find(".//pelicula[titulo='" + pelicula_eliminar + "']")
-
-            if pelicula is not None:
-                # Eliminar la película de la categoría
-                categoria.find('peliculas').remove(pelicula)
-
-                # Guardar los cambios en el archivo XML
-                tree.write('peliculas.xml')
-
-                mensaje = 'Película eliminada correctamente.'
-                print(mensaje)
-            else:
-                mensaje = 'La película no existe en la categoría.'
-                print(mensaje)
-        else:
-            mensaje = 'La categoría no existe.'
-
-        return render(request, 'gestionar_peliculas.html')
-
-    return render(request, 'gestionar_peliculas.html')      
+###-----------------------------------------------------------------------------------
 
 def vista_peliculas(request):
     
