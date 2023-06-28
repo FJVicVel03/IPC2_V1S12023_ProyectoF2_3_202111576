@@ -35,7 +35,7 @@
                 <tr>
                     <td>{{ sala.cine }}</td>
                     <td>{{ sala.n_sala }}</td>
-                    <td>{{ sala.asiento }}</td>
+                    <td>{{ sala.asientos }}</td>
                     <td>
                         <form method="POST" action="{% url 'eliminar_sala' sala.n_sala %}">
                             {% csrf_token %}

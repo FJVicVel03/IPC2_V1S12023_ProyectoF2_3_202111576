@@ -7,14 +7,14 @@ class Nodo:
         self.back = None
 
 class Tarjetas:
-    def __init__(self, tipo, numero, titular, fecha_exp):
+    def __init__(self, tipo, numero, titular, fecha_expiracion):
         self.tipo = tipo
         self.numero = numero
         self.titular = titular
-        self.fecha_exp = fecha_exp
+        self.fecha_expiracion = fecha_expiracion
 
     def imprimir(self):
-        print(f"Tipo: {self.tipo}, Numero: {self.numero}, Titular: {self.titular}, Expira en: {self.fecha_exp}")
+        print(f"Tipo: {self.tipo}, Numero: {self.numero}, Titular: {self.titular}, Expira en: {self.fecha_expiracion}")
 
 class ListaTarjetasEnlazada:
     def __init__(self):

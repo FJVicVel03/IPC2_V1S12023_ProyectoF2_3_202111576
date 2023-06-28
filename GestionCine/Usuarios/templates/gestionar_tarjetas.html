@@ -46,7 +46,7 @@
                 <td>{{ tarjeta.tipo }}</td>
                 <td>{{ tarjeta.numero }}</td>
                 <td>{{ tarjeta.titular }}</td>
-                <td>{{ tarjeta.fecha_exp }}</td>
+                <td>{{ tarjeta.fecha_expiracion }}</td>
                 <td>
                     <form method="POST" action="{% url 'eliminar_tarjeta' tarjeta.numero %}">
                         {% csrf_token %}

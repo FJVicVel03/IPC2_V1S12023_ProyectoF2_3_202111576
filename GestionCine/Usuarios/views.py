@@ -5,7 +5,7 @@ import requests
 from .Lista_Usuarios import ListaEnlazadaSimple, Usuario
 from .Pelicula import ListaCircularDoblementeEnlazada, Pelicula, Categoria
 from .Lista_Peliculas_Carrusel import construir_lista_doble_enlazada, obtener_titulos_lista, obtener_imagenes_lista
-from .Lista_Salas import ListaDobleEnlazada
+from .Lista_Salas import ListaDobleEnlazada, Salas
 from .Lista_Tarjetas import ListaTarjetasEnlazada
 
 global lista_enlazada_simple, lista_circular_doble, lista_peliculas, lista_salas, lista_tarjetas
@@ -473,6 +473,12 @@ def mostrar_sala(request):
 def cargar_xml_s(request):
     if request.method == "POST":
         lista_salas.CargarXML_LED(1)
+        response = requests.get('http://localhost:5008/getSalas')
+        s_Api = response.json()
+        for sala in s_Api[0]['cines']['cine']['salas']['sala']:
+            lista_salas.add(Salas('Cine ABC', sala['numero'], sala['asientos']))
+        print(s_Api)    
+        
     return render(request, 'gestionar_salas.html', {'Salas': lista_salas})
 
 def crear_sala(request):
@@ -510,18 +516,12 @@ def mostrar_tarjeta(request):
 def cargar_xml_t(request):
     if request.method == "POST":
         lista_tarjetas.CargarXML_TAR(1)
-        #response = requests.get('http://localhost:5007/getTarjetas')
-        #tarjetas_API = response.json()
-        #print(tarjetas_API)
+        response = requests.get('http://localhost:5009/getTarjetas')
+        tarjetas_API = response.json()
+        print(tarjetas_API)
 
-        #for tarj in tarjetas_API:
-        #    tarjeta = {
-        #        'id': tarj['tipo'],
-         #       'tipo': tarj['numero'],
-        #        'numero': tarj['titular'],
-        #        'titular': tarj['fecha_expiracion']
-         #   }
-         #   lenTarjetas.add(tarjeta)
+        for tarj in tarjetas_API:
+            lista_tarjetas.add(tarj)
     return render(request, 'gestionar_tarjetas.html', {'Tarjetas': lista_tarjetas})
 
 def crear_tarjeta(request):
