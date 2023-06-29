@@ -9,13 +9,14 @@ from .Lista_Peliculas_Carrusel import construir_lista_doble_enlazada, obtener_ti
 from .Lista_Salas import ListaDobleEnlazada, Salas
 from .Lista_Tarjetas import ListaTarjetasEnlazada
 
-global lista_enlazada_simple, lista_circular_doble, lista_peliculas, lista_salas, lista_tarjetas, lista_categorias
+global lista_enlazada_simple, lista_circular_doble, lista_peliculas, lista_salas, lista_tarjetas, lista_categorias, ischarged
 lista_enlazada_simple = ListaEnlazadaSimple()
 lista_circular_doble = ListaCircularDoblementeEnlazada()
 lista_salas = ListaDobleEnlazada()
 lista_tarjetas = ListaTarjetasEnlazada()
 global lista_usuarios
 lista_usuarios = []
+ischarged = False
 
 def login(request):
     if request.method == 'POST':
@@ -88,7 +89,7 @@ def gestionar_tarjetas(request):
 def cargar_xml(request):
     if request.method == 'POST':
         lista_enlazada_simple.CargarXML(1)
-        response = requests.get('http://localhost:5007/getUsuarios')
+        response = requests.get('http://localhost:5010/getUsuarios')
         u_Api = response.json()
         
         for usuario in u_Api:
@@ -221,11 +222,32 @@ def mostrar_peliculas(request):
     return render(request, 'gestionar_peliculas.html', {"peliculas": lista_circular_doble}) 
 def cargar_peliculas_xml(request):
     if request.method == "POST":
-        
-        lista = lista_circular_doble.obtener_peliculas_xml()
-        
-        print(lista)
-        return render(request, 'gestionar_peliculas.html', {'peliculas': lista})
+        response = requests.get('http://localhost:5010/getPeliculas')
+        p_Api = response.json()
+
+        for peli in p_Api:
+            if not ischarged:
+                nombre = "Anime"
+                categoria = Categoria(nombre)
+                pelicula = Pelicula(
+                    titulo=peli['titulo'],
+                    director=peli['director'],
+                    anio=peli['anio'],
+                    fecha=peli['fecha'],
+                    hora=peli['hora'],
+                    imagen=peli['imagen'],
+                    precio=peli['precio'],
+                )
+
+                lista_circular_doble.agregar(pelicula)
+
+                lista1 = lista_circular_doble.obtener_elementos()
+                lista2 = lista_circular_doble.obtener_peliculas_xml()
+                lista_combinada = list(zip(lista1,lista2))
+
+        print(lista_combinada)
+        return render(request, 'gestionar_peliculas.html', {'peliculas': lista1, 'pelis': lista2})
+
 
 def crear_pelicula(request):
     if request.method == 'POST':
@@ -341,7 +363,7 @@ def mostrar_sala(request):
 def cargar_xml_s(request):
     if request.method == "POST":
         lista_salas.CargarXML_LED(1)
-        response = requests.get('http://localhost:5008/getSalas')
+        response = requests.get('http://localhost:5010/getSalas')
         s_Api = response.json()
         for sala in s_Api[0]['cines']['cine']['salas']['sala']:
             lista_salas.add(Salas('Cine ABC', sala['numero'], sala['asientos']))
@@ -384,7 +406,7 @@ def mostrar_tarjeta(request):
 def cargar_xml_t(request):
     if request.method == "POST":
         lista_tarjetas.CargarXML_TAR(1)
-        response = requests.get('http://localhost:5009/getTarjetas')
+        response = requests.get('http://localhost:5010/getTarjetas')
         tarjetas_API = response.json()
         print(tarjetas_API)
 

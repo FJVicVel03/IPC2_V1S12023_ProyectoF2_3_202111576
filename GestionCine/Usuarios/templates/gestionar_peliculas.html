@@ -55,6 +55,22 @@
             </tr>
             {% endfor %}
         </tbody>
+        <tbody>
+            {% for pelicula in pelis %}
+            <tr>
+                <td>{{ pelicula.titulo }}</td>
+                <td>{{ pelicula.director }}</td>
+                <td>{{ pelicula.anio }}</td>
+                <td>{{ pelicula.fecha }}</td>
+                <td>{{ pelicula.hora }}</td>
+                <td>{{ pelicula.imagen }}</td>
+                <td>{{ pelicula.precio }}</td>
+                <td>
+                    <a href="{% url 'eliminar_pelicula' nombre=pelicula.titulo%}">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     <button type="submit">Cargar Películas</button>
     </form>
