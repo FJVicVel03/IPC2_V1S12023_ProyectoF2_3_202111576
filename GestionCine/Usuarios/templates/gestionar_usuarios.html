@@ -2,87 +2,93 @@
 <html>
 <head>
     <title>Gestión de Usuarios</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'usuarios.css' %}">
 </head>
 <body>
-    <h1>Gestión de Usuarios</h1>
-    <form method="POST" action="{% url 'cargar_xml'%}">
-        {% csrf_token %}
-        <button type="submit">Cargar</button>
-    </form>
-    <h2>Crear Usuario</h2>
-    <form method="POST" action="{% url 'crear_usuario' %}">
-        {% csrf_token %}
-        <!-- Aquí irían los campos del formulario para crear un usuario -->
-        <!-- Ejemplo: -->
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <input type="text" name="apellido" placeholder="Apellido" required>
-        <input type="text" name="correo" placeholder="Correo" required>
-        <input type="text" name="contra" placeholder="Contraseña" required>
-        <input type="text" name="telefono" placeholder="Telefono" required>
-        <!-- Otros campos del formulario -->
-        <button type="submit">Crear</button>
-    </form>
+    <div class="container">
 
-    <h2>Ver Usuarios</h2>
-    <!-- Aquí iría el código para mostrar la lista de usuarios existentes -->
-    <form method="POST" action="{% url 'mostrar_usuarios' %}">
-        <table>
-            <thead>
-                <th>Rol</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Telefono</th>
-                <th>Correo</th>
-                <th>Contraseña</th>
-            </thead>
-            <tbody>
-                {% for usuario in usuarios %}
-                <tr>
-                    <td>{{ usuario.rol }}</td>
-                    <td>{{ usuario.nombre }}</td>
-                    <td>{{ usuario.apellido }}</td>
-                    <td>{{ usuario.telefono }}</td>
-                    <td>{{ usuario.correo }}</td>
-                    <td>{{ usuario.contrasena }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td>No existen registros</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </form>
-    
-    <h2>Modificar Usuario</h2>
-    <form method="POST" action="{% url 'modificar_usuario' %}">
-        {% csrf_token %}
-        <!-- Aquí irían los campos del formulario para crear un usuario -->
-        <!-- Ejemplo: -->
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <input type="text" name="apellido" placeholder="Apellido" required>
-        <input type="text" name="rol" placeholder="Rol" required>
-        <input type="text" name="correo" placeholder="Correo" required>
-        <input type="text" name="contra" placeholder="Contraseña" required>
-        <input type="text" name="telefono" placeholder="Telefono" required>
-        <!-- Otros campos del formulario -->
-        <button type="submit">Modificar</button>
-    </form>
+        <form method="POST" action="{% url 'pagina_login' %}">
+            {% csrf_token %}
+            <button type="submit">Login</button>
+        </form>
+        <form method="POST" action="{% url 'administrador' %}">
+            {% csrf_token %}
+            <button type="submit">Gestion</button>
+        </form>
 
-    <h2>Eliminar Usuario</h2>
-    <form method="POST" action="{% url 'eliminar_usuario' %}">
-        {% csrf_token %}
-        <!-- Aquí irían los campos del formulario para crear un usuario -->
-        <!-- Ejemplo: -->       
-        <input type="text" name="correo" placeholder="Correo" required>
-        <!-- Otros campos del formulario -->
-        <button type="submit">Eliminar</button>
-    </form>
-    <form method="POST" action="{% url 'administrador'%}">
-        {% csrf_token %}
-        <button type="submit">Regresar</button>
-    </form>    
-
-
+        <h1>Gestión de Usuarios</h1>
+        <form method="POST" action="{% url 'cargar_xml'%}">
+            {% csrf_token %}
+            <button type="submit">Cargar</button>
+        </form>
+        
+        <h2>Crear Usuario</h2>
+        <form method="POST" action="{% url 'crear_usuario' %}">
+            {% csrf_token %}
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="text" name="apellido" placeholder="Apellido" required>
+            <input type="text" name="correo" placeholder="Correo" required>
+            <input type="text" name="contra" placeholder="Contraseña" required>
+            <input type="text" name="telefono" placeholder="Telefono" required>
+            <button type="submit">Crear</button>
+        </form>
+        
+        <h2>Ver Usuarios</h2>
+        <form method="POST" action="{% url 'mostrar_usuarios' %}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rol</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Telefono</th>
+                        <th>Correo</th>
+                        <th>Contraseña</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.rol }}</td>
+                        <td>{{ usuario.nombre }}</td>
+                        <td>{{ usuario.apellido }}</td>
+                        <td>{{ usuario.telefono }}</td>
+                        <td>{{ usuario.correo }}</td>
+                        <td>{{ usuario.contrasena }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">No existen registros</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+        
+        <h2>Modificar Usuario</h2>
+        <form method="POST" action="{% url 'modificar_usuario' %}">
+            {% csrf_token %}
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="text" name="apellido" placeholder="Apellido" required>
+            <input type="text" name="rol" placeholder="Rol" required>
+            <input type="text" name="correo" placeholder="Correo" required>
+            <input type="text" name="contra" placeholder="Contraseña" required>
+            <input type="text" name="telefono" placeholder="Telefono" required>
+            <button type="submit">Modificar</button>
+        </form>
+        
+        <h2>Eliminar Usuario</h2>
+        <form method="POST" action="{% url 'eliminar_usuario' %}">
+            {% csrf_token %}
+            <input type="text" name="correo" placeholder="Correo" required>
+            <button type="submit">Eliminar</button>
+        </form>
+        
+        <form method="POST" action="{% url 'administrador'%}">
+            {% csrf_token %}
+            <button type="submit">Regresar</button>
+        </form>
+    </div>
 </body>
 </html>

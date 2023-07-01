@@ -1,0 +1,52 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #333;
+}
+
+p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los botones */
+button, a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Colores para los botones */
+button:nth-of-type(1), a {
+    background-color: #007bff; /* Gestionar Usuarios y Regresar */
+}
+
+button:nth-of-type(2) {
+    background-color: #28a745; /* Gestionar Películas */
+}
+
+button:nth-of-type(3) {
+    background-color: #dc3545; /* Gestionar Salas */
+}
+
+button:nth-of-type(4) {
+    background-color: #ff9800; /* Gestionar Tarjetas */
+}
+
+/* Estilos cuando se coloca el cursor sobre los botones */
+button:hover, a:hover {
+    opacity: 0.8;
+}

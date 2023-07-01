@@ -14,7 +14,7 @@ def getPelicula():
                             "anio": "2016",
                             "fecha": "2023-06-28",
                             "hora": "15:30",
-                            "imagen": "https://example.com/your_name.png",
+                            "imagen": "https://m.media-amazon.com/images/M/MV5BNGYyNmI3M2YtNzYzZS00OTViLTkxYjAtZDIyZmE1Y2U1ZmQ2XkEyXkFqcGdeQXVyMTA4NjE0NjEy._V1_.jpg",
                             "precio": "55"
                         },
                         {
@@ -23,7 +23,7 @@ def getPelicula():
                             "anio": "2020",
                             "fecha": "2023-06-28",
                             "hora": "16:45",
-                            "imagen": "https://example.com/demon_slayer.png",
+                            "imagen": "https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_FMjpg_UX1000_.jpg",
                             "precio": "40"
                         },
                         {
@@ -32,7 +32,7 @@ def getPelicula():
                             "anio": "2020",
                             "fecha": "2023-06-28",
                             "hora": "18:00",
-                            "imagen": "https://example.com/attack_on_titan.png",
+                            "imagen": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/3542/35422068_so.jpg",
                             "precio": "60"
                         }
                     ]

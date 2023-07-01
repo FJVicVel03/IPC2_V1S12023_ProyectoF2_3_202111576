@@ -88,7 +88,7 @@ def gestionar_tarjetas(request):
 
 def cargar_xml(request):
     if request.method == 'POST':
-        lista_enlazada_simple.CargarXML(1)
+        lista_enlazada_simple.carga_xml_u(1)
         response = requests.get('http://localhost:5010/getUsuarios')
         u_Api = response.json()
         
@@ -114,8 +114,8 @@ def crear_usuario(request):
         # Guardar el usuario en la lista enlazada o en la base de datos
         
         #lista_enlazada_simple.add(usuario)
-        lista_enlazada_simple.agregarXML(nombre,apellido,telefono,correo,password)
-        lista_enlazada_simple.CargarXML(1)
+        lista_enlazada_simple.agg_xml(nombre,apellido,telefono,correo,password)
+        lista_enlazada_simple.carga_xml_u(1)
         return redirect(gestionar_usuarios)
     
 def mostrar_usuarios(request):
@@ -149,30 +149,9 @@ def modificar_usuario(request):
         tree = ET.parse('usuarios.xml')
         root = tree.getroot()
 
-        encontrado = False
-        for user in root.findall('usuario'):
-            if user.find('correo').text == correo:
-                encontrado = True
-                lista_enlazada_simple.delete(correo)
-                rol = user.find('rol')
-                rol.text = nuevo_rol
-                nombre = user.find('nombre')
-                nombre.text = nuevo_nombre
-                apellido = user.find('apellido')
-                apellido.text = nuevo_apellido
-                telefono = user.find('telefono')
-                telefono.text = nuevo_telefono
-                contrasena = user.find('contrasena')
-                contrasena.text = nueva_contrasena
-                break
+        lista_enlazada_simple.editar_xml(nuevo_rol,nuevo_nombre,nuevo_apellido,nuevo_telefono,correo,nueva_contrasena)
 
-        if encontrado:
-            tree.write('usuarios.xml')
-            mensaje = "Usuario modificado exitosamente."
-        else:
-            mensaje = "Usuario no existente."
-
-        return render(request, 'gestionar_usuarios.html', {'mensaje': mensaje})
+        return render(request, 'gestionar_usuarios.html')
 
     return render(request, 'gestionar_usuarios.html')
 
@@ -180,7 +159,7 @@ def eliminar_usuario(request):
     if request.method == "POST":
         correo = request.POST['correo']
         
-        lista_enlazada_simple.delete(correo)
+        lista_enlazada_simple.borrar(correo)
         lista_enlazada_simple.eliminarXML(correo)
         
     return render(request, 'gestionar_usuarios.html')

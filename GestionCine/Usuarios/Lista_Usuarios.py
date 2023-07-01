@@ -20,7 +20,7 @@ class ListaEnlazadaSimple:
             yield actual.data
             actual = actual.next
 
-    def existe_usuario_correo(self, correo):
+    def existe_correo(self, correo):
         actual = self.cabeza
         while actual is not None:
             if actual.data.correo == correo:
@@ -43,7 +43,7 @@ class ListaEnlazadaSimple:
                 return
             actual.next = nuevo
 
-    def modify(self, data_nuevo, index):
+    def actualizar(self, data_nuevo, index):
         actual = self.cabeza
         indice = 0
 
@@ -54,7 +54,7 @@ class ListaEnlazadaSimple:
             indice += 1
             actual = actual.next
 
-    def delete(self, correo):
+    def borrar(self, correo):
         # Check if list is empty
         if self.cabeza is None:
             return
@@ -72,13 +72,13 @@ class ListaEnlazadaSimple:
                 return
             actual = actual.next
 
-    def Imprimir(self):
+    def imprimir(self):
         actual = self.cabeza
         while actual is not None:
             actual.data.imprimir()  # Llamar al método 'imprimir' del objeto Usuario
             actual = actual.next
 
-    def CargarXML(self, operacion):
+    def carga_xml_u(self, operacion):
         tree = ET.parse('usuarios.xml')
         root = tree.getroot()
 
@@ -92,22 +92,22 @@ class ListaEnlazadaSimple:
 
             objeto = Usuario(rol, nombre, apellido, telefono, correo, contrasena)
 
-            if self.existe_usuario_correo(objeto):
+            if self.existe_correo(objeto):
                continue  # Saltar el usuario repetido
 
             if operacion == 1:
-                if self.existe_usuario_correo(correo):
+                if self.existe_correo(correo):
                     print("\tEl cliente ya existe en la lista.")
                     return False
 
                 else:
                     self.add(objeto)
             elif operacion == 2:
-                self.modify(objeto, indice)
+                self.actualizar(objeto, indice)
             elif operacion == 3:
-                self.delete(objeto)
+                self.borrar(objeto)
 
-    def agregarXML(self, Nombre, Apellido, Telefono, Email, Password):
+    def agg_xml(self, Nombre, Apellido, Telefono, Email, Password):
         tree = ET.parse('usuarios.xml')
         root = tree.getroot()
 
@@ -138,7 +138,7 @@ class ListaEnlazadaSimple:
 
         tree.write('usuarios.xml')
 
-    def editarXML(self, new_rol, new_nombre, new_apellido, new_telefono, tmp_correo, new_contrasena):
+    def editar_xml(self, new_rol, new_nombre, new_apellido, new_telefono, tmp_correo, new_contrasena):
         tree = ET.parse('usuarios.xml')
         root = tree.getroot()
 
@@ -160,7 +160,7 @@ class ListaEnlazadaSimple:
 
         tree.write('usuarios.xml')
 
-        self.CargarXML(2)
+        self.carga_xml_u(2)
 
     def eliminarXML(self, tmp_correo):
         tree = ET.parse('usuarios.xml')

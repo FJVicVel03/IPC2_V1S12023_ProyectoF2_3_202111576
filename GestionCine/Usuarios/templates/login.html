@@ -2,18 +2,22 @@
     <p>{{ error_message }}</p>
 {% endif %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'login.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
+<div class="login">
+	<h1>Login</h1>
+    
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+    	<label for="correo">Correo:</label>
+        <input type="text" id="correo" name="correo" required>
+        <br>
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" id="contrasena" name="contrasena" required>
+        <br>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Iniciar sesión</button>
+    </form>
+</div>
 
-<form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <label for="correo">Correo:</label>
-    <input type="text" id="correo" name="correo" required>
-    <br>
-    <label for="contrasena">Contraseña:</label>
-    <input type="password" id="contrasena" name="contrasena" required>
-    <br>
-    <input type="submit" value="Iniciar sesión">
-</form>
 
 <!-- Carrusel de imágenes -->
 <form method="post" action="{% url 'vista_peliculas' %}">
