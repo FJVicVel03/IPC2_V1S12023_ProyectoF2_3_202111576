@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Usuarios.views import login, vista_peliculas, pagina_login
-from Usuarios.views import pagina_administrador
+from Usuarios.views import pagina_administrador, eliminar_sala, eliminar_tarjeta
 from Usuarios.views import pagina_cliente, crear_pelicula, cargar_peliculas_xml, eliminar_categoria, eliminar_pelicula, modificar_pelicula
 from Usuarios.views import mostrar_peliculas, cargar_peliculas, gestionar_peliculas, modificar_categoria
 from Usuarios.views import gestionar_usuarios, crear_usuario, mostrar_usuarios, cargar_xml, modificar_usuario, eliminar_usuario

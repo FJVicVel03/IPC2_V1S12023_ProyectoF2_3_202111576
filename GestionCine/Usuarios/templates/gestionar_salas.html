@@ -51,7 +51,7 @@
                 <tr>
                     <td>{{ sala.cine }}</td>
                     <td>{{ sala.n_sala }}</td>
-                    <td>{{ sala.asientos }}</td>
+                    <td>{{ sala.asiento }}</td>
                     <td>
                         <form method="POST" action="{% url 'eliminar_sala' sala.n_sala %}">
                             {% csrf_token %}
@@ -74,6 +74,16 @@
             <input type="text" name="nueva_sala" placeholder="nueva_sala" required>
             <!-- Otros campos del formulario -->
             <button type="submit">Modificar</button>
+        </form>
+        <h2>Eliminar Sala</h2>
+        <form method="POST" action="{% url 'eliminar_sala' %}">
+            {% csrf_token %}
+            <!-- Aquí irían los campos del formulario para crear un usuario -->
+            <!-- Ejemplo: -->
+            <input type="text" name="numero" placeholder="Numero" required>
+
+            <!-- Otros campos del formulario -->
+            <button type="submit">Eliminar</button>
         </form>
     </div>
 </body>

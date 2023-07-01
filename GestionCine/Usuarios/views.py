@@ -371,7 +371,7 @@ def modificar_sala(request):
 
     return render(request, 'gestionar_salas.html')
 
-def eliminar_sala(request, numero):
+def eliminar_sala(request):
     if request.method == 'POST':
         numero = request.POST.get('numero')
         lista_salas.eliminar_LED(numero)
@@ -384,7 +384,7 @@ def mostrar_tarjeta(request):
 
 def cargar_xml_t(request):
     if request.method == "POST":
-        lista_tarjetas.CargarXML_TAR(1)
+        lista_tarjetas.cargar_xml(1)
         response = requests.get('http://localhost:5010/getTarjetas')
         tarjetas_API = response.json()
         print(tarjetas_API)
@@ -399,7 +399,7 @@ def crear_tarjeta(request):
         numero = request.POST.get('numero')
         titular = request.POST.get('titular')
         fechaexp = request.POST.get('fecha_expiracion')
-        lista_tarjetas.agregarXML_TAR(tipo, numero, titular, fechaexp)
+        lista_tarjetas.agregar_xml(tipo, numero, titular, fechaexp)
         return redirect('cargar_xml_t')
     return render(request, 'gestionar_tarjetas.html')
 
@@ -410,14 +410,14 @@ def modificar_tarjeta(request):
         titular = request.POST['titular']
         fechaexp = request.POST['fecha_expiracion']
 
-        lista_tarjetas.editarXML_TAR(tipo, numero, titular, fechaexp)
-
+        lista_tarjetas.editar_xml(tipo, numero, titular, fechaexp)
         return render(request, 'gestionar_tarjetas.html')
 
     return render(request, 'gestionar_tarjetas.html')
 
-def eliminar_tarjeta(request, numero):
+def eliminar_tarjeta(request):
     if request.method == 'POST':
         numero = request.POST.get('numero')
-        lista_tarjetas.eliminar_TAR(numero)
+        lista_tarjetas.eliminar_xml(numero)
+        lista_tarjetas.delete(numero)
     return redirect('cargar_xml_t')

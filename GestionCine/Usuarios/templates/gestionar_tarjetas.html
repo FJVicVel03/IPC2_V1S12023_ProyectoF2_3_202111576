@@ -82,6 +82,16 @@
             <!-- Otros campos del formulario -->
             <button type="submit">Modificar</button>
         </form>
+
+        <h2>Eliminar Tarjeta</h2>
+        <form method="POST" action="{% url 'eliminar_tarjeta' %}">
+            {% csrf_token %}
+            <!-- Aquí irían los campos del formulario para crear un usuario -->
+            <!-- Ejemplo: -->
+            <input type="text" name="numero" placeholder="Numero" required>
+            <!-- Otros campos del formulario -->
+            <button type="submit">Eliminar</button>
+        </form>
     </div>
 </body>
 </html>

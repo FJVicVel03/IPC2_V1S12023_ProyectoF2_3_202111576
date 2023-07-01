@@ -59,11 +59,11 @@ def getSala():
             "asientos": "115"
           },
           {
-            "numero": "#USACIPC2_202212333_2",
+            "numero": "#USACIPC2_2022111576_2",
             "asientos": "80"
           },
           {
-            "numero": "#USACIPC2_202212333_3",
+            "numero": "#USACIPC2_202111576_3",
             "asientos": "120"
           }
         ]
@@ -87,13 +87,13 @@ def getTarjeta():
  {
  "tipo": "Debito",
  "numero": "1234567890123456",
- "titular": "John Doe",
+ "titular": "Paco Armas",
  "fecha_expiracion": "12/2024"
  },
  {
  "tipo": "Credito",
  "numero": "9876543210987654",
- "titular": "Jane Smith",
+ "titular": "Josue Vásquez",
  "fecha_expiracion": "08/2023"
  }
  ]

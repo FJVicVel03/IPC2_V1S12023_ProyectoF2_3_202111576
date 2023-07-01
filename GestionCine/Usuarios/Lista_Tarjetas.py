@@ -104,7 +104,7 @@ class ListaTarjetasEnlazada:
         
         return False
     
-    def CargarXML_TAR(self, operacion):
+    def cargar_xml(self, operacion):
         if self.charged:
             return
         
@@ -131,7 +131,7 @@ class ListaTarjetasEnlazada:
 
         self.charged = True
 
-    def agregarXML_TAR(self, typetar, number, person, datex):
+    def agregar_xml(self, typetar, number, person, datex):
         tree = ET.parse('tarjetas.xml')
         root = tree.getroot()
 
@@ -155,9 +155,9 @@ class ListaTarjetasEnlazada:
         root.append(nueva_tarjeta)
 
         tree.write('tarjetas.xml')
-        self.CargarXML_TAR(1)
+        self.cargar_xml(1)
 
-    def editarXML_TAR(self, tmp_type, tmp_number, tmp_person, tmp_date):
+    def editar_xml(self, tmp_type, tmp_number, tmp_person, tmp_date):
         tree = ET.parse('tarjetas.xml')
         root = tree.getroot()
 
@@ -175,9 +175,9 @@ class ListaTarjetasEnlazada:
 
         tree.write('tarjetas.xml')
 
-        self.CargarXML_TAR(2)
+        self.cargar_xml(2)
 
-    def eliminar_TAR(self, number):
+    def eliminar_xml(self, number):
         tree = ET.parse('tarjetas.xml')
         root = tree.getroot()
 
@@ -188,4 +188,4 @@ class ListaTarjetasEnlazada:
 
         tree.write('tarjetas.xml')
         
-        self.CargarXML_TAR(3)
+        self.cargar_xml(3)
